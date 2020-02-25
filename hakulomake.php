@@ -16,7 +16,7 @@
   <?php
   
     try {
-      $con = mysqli_connect("localhost", "omnia", "omnia2020", "sakila" ) or die;
+      $con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die;
     } catch (Exception $e) {
       $info = $e->getMessage(); 
       echo "No connection to server". $info;    
