@@ -12,11 +12,50 @@
   try {
     $con=  mysqli_connect("localhost","omnia","omnia2020","omnia") or die;
   } catch (Exception $e) {
-    $info =  $e->getMessage();
+    $info = $e->getMessage();
   } 
 
+  if (isset($_POST['merkki']) && isset($_POST['vari']) && isset($_POST['rekisterinro'])){
+    $merkki = trim(strip_tags( $_POST['merkki'])); 
+    $vari = trim(strip_tags( $_POST['vari']));  
+    $rekisterinro = trim(strip_tags( $_POST['rekisterinro'])); 
 
+    if ( isset( $_POST['add'])){
+      if ((
+        $merkki !== "" && $vari !== "" && $rekisterinro !== ""
+      )) {
+        try {
+            $smtp = $con->prepare("INSERT INTO auto (merkki, vari, rekisterinro) VALUE ( ?, ?, ?)"); 
+            $smtp->bind_param("sss", $merkki, $vari, $rekisterinro);
+            $smtp->execute(); 
+            if ( mysqli_insert_id($con) === 0){
+              $info = mysqli_error($con); 
+            } else {
+              $info = "lisatty"; 
+            }
+          } catch(Exception $e){
+            $info = $e->getMessage(); 
+            echo $e->getMessage(); 
+        }
+      }
+    }
+  }
 
+  if ($_REQUEST['button'] == 'remove'){
+    $id = $_GET['id'];    
+    try { 
+      $result = $con->query("DELETE from auto WHERE id = '$id'");
+      if ($result === TRUE) {
+        echo "Auto has been removed.";
+      } 
+      else {
+        echo "Virhe: " . $query . "<br>" . $yhteys->error;
+      } 
+    } catch (Exception $e ){
+      $info = $e->getMessage(); 
+      echo $e->getMessage();
+    }
+  }
 ?>
 
 <form id="autot" method="POST">
@@ -37,6 +76,8 @@
         <th>Merkki</th>
         <th>Väri</th>
         <th>Rekisteri numero</th>
+        <th>Action</th>
+        <th>Action</th>
       </tr>
   ";
   while( $row = mysqli_fetch_array($result)) {
@@ -44,14 +85,15 @@
             <td>".$row['merkki']."</td>
             <td>".$row['vari']."</td>
             <td>".$row['rekisterinro']."</td>
+            <td><a href=\"autoupdate.php?id=".$row['id']."&button=update\">Update</a></td>
+            <td><a href=\"autot.php?id=".$row['id']."&button=remove\">Remove</a></td> 
           </tr>
     ";
   }
 
-  echo "<table>";
+  echo "</table>";
   $con->clos();
 ?>
 
-  
 </body>
 </html>

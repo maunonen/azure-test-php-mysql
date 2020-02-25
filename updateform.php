@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,11 +37,11 @@ if(isset( $_POST['save'])){
     $smtp->execute();
     header("Refresh:0");
     //header("Location: http://localhost:8888/henkilot.php");
-    /* if ( mysql_inset_id($con)=== 0) {
+    if ( mysql_insert_id($con)=== 0) {
       $info = mysql_error($con);
     } else {
       $info = "updated";
-    } */
+    }
   } catch (Exception $e) {
     $info = $e->getMessage(); 
     echo $e->getMessage();
@@ -59,13 +57,6 @@ elseif ($_REQUEST['button'] == 'update'){
       $info = $e->getMessage(); 
       echo $e->getMessage();
     } 
-
-    
-    /* if ($result === TRUE ){
-      echo " Person found" ;
-    } else {
-      echo "Nothing found";
-    } */
 
     $row = mysqli_fetch_array($result); 
     $etunimi = $row['etunimi'];
