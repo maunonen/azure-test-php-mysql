@@ -54,8 +54,8 @@
         
   try {
       // gitbdfbd
-      $con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die;
-      //$con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die;
+      //$con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die;
+      $con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die;
         
       $catResult = $con->query("select category_id, name from category");
       //echo var_dump($catResult);
