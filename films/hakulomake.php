@@ -54,8 +54,8 @@
         
   try {
       // gitbdfbd
-      //$con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die;
-      $con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die;
+      $con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die;
+      //$con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die;
         
       $catResult = $con->query("select category_id, name from category");
       //echo var_dump($catResult);
@@ -200,59 +200,7 @@
     }
      echo "  </tbody>
             </table>";  
-
-     
-      
-    
-    //End of film card
-     
-  ?>  
-
-
-
-
-      
-      <?php 
-  /* try { 
-    if ($result->num_rows > 0) {
-      
-      echo "
-          <table class='table table-hover mt-3'>
-              <thead class='thead-dark'>
-                <tr>
-                  <th scope='col'>Name</th>
-                  <th scope='col'>Description</th>
-                  <th scope='col'>Rating</th>
-                  <th scope='col'>Release</th>
-                </tr>
-              </thead>
-            <tbody>";
-      while($row = $result->fetch_assoc()) {
-          echo "
-
-              <tr>
-                <td>".$row['title']."</td>
-                <td>".$row['description']."</td>
-                <td>".$row['rating']."</td>
-                <td>".$row['release_year']."</td>
-              </tr>
-          ";
-      };    
-    
-    //End of film card
-      echo "  </tbody>
-            </table>";    
-    }
-    else {
-      echo "<h1 class=\"display-6 text-left my-2\">Nothing found</h1>";
-    };
-    $con->close();
-  } catch (Exception $e) {
-    $info = $e->getMessage();
-    echo $e->getMessage();
-  } */
-?>
-      
+    ?>  
       </div>
     </div>
   </div>

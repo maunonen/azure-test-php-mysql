@@ -8,7 +8,11 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Add New Film</title>
+
+
+  
 </head>
 <body>
 
@@ -29,8 +33,8 @@
 
   try {
       // gitbdfbd
-      //$con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die("No connection to server");
-      $con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die("No connection to server");
+        $con=  mysqli_connect("localhost","omnia","omnia2020","sakila") or die("No connection to server");
+      //$con = mysqli_connect("127.0.0.1:51250", "azure", "6#vWHD_$", "sakila" ) or die("No connection to server");
       $lanResult = $con->query("SELECT language.language_id , language.name FROM language");
       
     } catch (Exception $e) {
@@ -238,14 +242,80 @@ if (
             </select>
           </div>
         </div>  
-        <button type="submit" class="btn btn-primary my-2" name="addfilm">Send</button>
+        <button type="submit" class="btn btn-primary my-2" name="addfilm" id="sendFilm">Send</button>
       </form>
-      
     </div>
   </div>
 </div>
 
 
+
+
+<script>
+
+$(document).ready(function(){
+  
+$("#sendFilm").submit(function(event){
+
+    // Prevent default posting of form - put here to work in case of errors
+    event.preventDefault();
+
+    alert("")
+
+    // Abort any pending request
+    if (request) {
+        request.abort();
+    }
+    // setup some local variables
+    var $form = $(this);
+
+    // Let's select and cache all the fields
+    var $inputs = $form.find("input, select, button, textarea");
+
+    // Serialize the data in the form
+    var serializedData = $form.serialize();
+
+    // Let's disable the inputs for the duration of the Ajax request.
+    // Note: we disable elements AFTER the form data has been serialized.
+    // Disabled form elements will not be serialized.
+    $inputs.prop("disabled", true);
+
+    // Fire off the request to /form.php
+    request = $.ajax({
+        url: "/form.php",
+        type: "post",
+        data: serializedData
+    });
+
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        console.log("Hooray, it worked!");
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+    });
+
+    // Callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // Reenable the inputs
+        $inputs.prop("disabled", false);
+    });
+
+});
+
+
+});
+
+
+</script>  
   
 </body>
 </html>
