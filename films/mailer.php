@@ -52,6 +52,6 @@ try {
 }
 
 //function sendNotification($subject = "" , $name= "" , $address = "", $body = "" , $altBody ="") {
-sendNotification( "New film has been created", "ALexander", "santari@gmail.com", "<h1>New film has been added to DB</h1>", "New film has been added to DB"); 
+sendNotification( "New film has been created", "ALexander", "santari33@gmail.com", "<h1>New film has been added to DB</h1>", "New film has been added to DB"); 
 
 ?>
