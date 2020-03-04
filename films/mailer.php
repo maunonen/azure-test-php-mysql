@@ -17,22 +17,13 @@ try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
     
-    //$host = getenv('WEBSITE_MYSQL_GENERAL_LOG');
-    echo "Some env". getenv("WEBSITE_MYSQL_GENERAL_LOG"); 
-    echo "Some env". getenv("MAIL_SERVER_PORT"); 
-
-    //phpinfo(); 
-    //echo getenv('MAIL_SERVER_TOKEN'); 
-    //echo getenv('MAIL_SERVER_USERNAME'); 
-    //echo getenv('MAIL_SERVER_PORT'); 
-    
     $mail->isSMTP();                                            // Send using SMTP
-    $mail->Host       = 'smtp.sendgrid.net';                    // Set the SMTP server to send through
+    $mail->Host       = getenv('MAIL_SERVER_HOST');                    // Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = '';                     // SMTP username
-    $mail->Password   = '';                               // SMTP password
+    $mail->Username   = getenv('MAIL_SERVER_USERNAME');                     // SMTP username
+    $mail->Password   = getenv('MAIL_SERVER_TOKEN');                               // SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-    $mail->Port       = 587;                                    // TCP port to connect to
+    $mail->Port       = getenv('MAIL_SERVER_PORT');;                                    // TCP port to connect to
 
     //Recipients
     $mail->setFrom('from@example.com', 'Mailer');
@@ -52,7 +43,7 @@ try {
     $mail->Body    = $body;
     $mail->AltBody = $altBody;
 
-    //$mail->send();
+    $mail->send();
     echo 'Message has been sent';
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
